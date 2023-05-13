@@ -1,15 +1,10 @@
 "use strict";
-const canvas = document.getElementById('canvas');
 const ctx2 = canvas.getContext('2d');
-const W = canvas.width;
-const H = canvas.height;
-const centerX = W / 2;
-const centerY = H / 2;
 const radius = 100;
 const sides = 6;
 const angle = (Math.PI * 2) / sides;
 let step = 0;
-function draw() {
+function drawHexagon() {
     ctx2.clearRect(0, 0, W, H);
     ctx2.beginPath();
     for (let i = 0; i < sides; i++) {
@@ -25,7 +20,7 @@ function draw() {
     ctx2.closePath();
     ctx2.stroke();
     step += 0.01;
-    requestAnimationFrame(draw);
+    requestAnimationFrame(drawHexagon);
 }
-draw();
+drawHexagon();
 //# sourceMappingURL=Hexagon.js.map
