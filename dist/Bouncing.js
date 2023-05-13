@@ -1,5 +1,5 @@
 "use strict";
-const cavas = document.getElementById("bouncingBall");
+const cavas = document.getElementById("canvas");
 const ctx = cavas.getContext("2d");
 let x = cavas.width / 2;
 let y = cavas.height - 30;
@@ -43,35 +43,6 @@ function drawPaddle() {
     ctx.fillStyle = "#0095DD";
     ctx.fill();
     ctx.closePath();
-}
-function draw() {
-    ctx.clearRect(0, 0, cavas.width, cavas.height);
-    drawBall();
-    drawPaddle();
-    if (y + dy < Radius) {
-        dy = -dy;
-    }
-    else if (y + dy > cavas.height - Radius) {
-        if (x > paddleX && x < paddleX + paddleWidth) {
-            dy = -dy;
-        }
-        else {
-            alert("GAME OVER");
-            document.location.reload();
-            clearInterval(interval);
-        }
-    }
-    if (x + dx < Radius || x + dx > cavas.width - Radius) {
-        dx = -dx;
-    }
-    if (rightPressed && paddleX < cavas.width - paddleWidth) {
-        paddleX += 7;
-    }
-    else if (leftPressed && paddleX > 0) {
-        paddleX -= 7;
-    }
-    x += dx;
-    y += dy;
 }
 const interval = setInterval(draw, 30);
 //# sourceMappingURL=Bouncing.js.map
