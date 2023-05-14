@@ -1,97 +1,134 @@
 "use strict";
 const d = 50;
-const snake = [{ x: 0, y: 0 }];
-let apple = { x: 0, y: 0 };
-let dir = "right";
-let running = true;
+const originalSnakeLength = 4;
+const updateInterval = 100;
+function drawGrid() {
+    for (let x = 0; x < W; x += d) {
+        for (let y = 0; y < H; y += d) {
+            const rect = document.createElement("div");
+            rect.style.position = "absolute";
+            rect.style.left = x + "px";
+            rect.style.top = y + "px";
+            rect.style.width = d + "px";
+            rect.style.height = d + "px";
+            rect.style.border = "1px solid #000";
+            document.body.appendChild(rect);
+        }
+    }
+}
+const snake = [];
+for (let i = originalSnakeLength - 1; i >= 0; i--) {
+    snake.push({ x: i, y: 0 });
+}
+let direction = "right";
+let fruitX = 10;
+let fruitY = 10;
 let score = 0;
+let running = true;
+let gameOver = false;
+let cause;
+function start() {
+    draw();
+    if (running) {
+        setInterval(update, updateInterval);
+    }
+}
 function update() {
-    const head = { x: snake[0].x, y: snake[0].y };
-    switch (dir) {
-        case "right":
-            head.x += d;
-            break;
+    const head = snake[0];
+    let newX = head.x;
+    let newY = head.y;
+    switch (direction) {
         case "left":
-            head.x -= d;
+            newX--;
+            break;
+        case "right":
+            newX++;
             break;
         case "up":
-            head.y -= d;
+            newY--;
             break;
         case "down":
-            head.y += d;
-            break;
-        default:
+            newY++;
             break;
     }
-    drawApple();
-    if (head.x == apple.x && head.y == apple.y) {
+    snake.unshift({ x: newX, y: newY });
+    if (newX === fruitX && newY === fruitY) {
         score++;
-        apple = {
-            x: Math.floor(Math.random() * W / d) * d,
-            y: Math.floor(Math.random() * H / d) * d,
-        };
-        snake.push(head);
+        generateFruit();
     }
     else {
         snake.pop();
     }
-    ctx.textAlign = "center";
-    snake.unshift(head);
-}
-function checkCollision() {
-    const head = snake[0];
-    if (head.x < 0 || head.x >= W / d || head.y < 0 || head.y >= H / d) {
-        clearInterval(interval);
-        alert("Game Over \n Score ${score} \n Press Space to Restart");
+    if (newX < 0 || newX >= W / d || newY < 0 || newY >= H / d) {
+        gameOver = true;
+        cause = "wall";
+        endGame();
     }
-    running = true;
-}
-function drawApple() {
-    ctx.fillStyle = "red";
-    ctx.fillRect(apple.x * d, apple.y * d, d, d);
-}
-function draw() {
-    ctx.clearRect(0, 0, W, H);
-    snake.forEach((part, index) => {
-        if (index == 0) {
-            ctx.fillStyle = "green";
-        }
-        else {
-            ctx.fillStyle = "white";
-        }
-        ctx.fillRect(part.x, part.y, d, d);
-    });
-    for (let x = 0; x < W; x++) {
-        for (let y = 0; y < H; y++) {
-            ctx.strokeStyle = "black";
-            ctx.strokeRect(x * d, y * d, d, d);
+    for (let index = 1; index < snake.length; index++) {
+        if (newX === snake[index].x && newY === snake[index].y) {
+            gameOver = true;
+            cause = "snake";
+            endGame();
         }
     }
+    draw();
 }
-document.addEventListener("keydown", (e) => {
-    switch (e.key) {
-        case "ArrowLeft":
-            dir = "left";
+function generateFruit() {
+    fruitX = Math.floor(Math.random() * (W / d));
+    fruitY = Math.floor(Math.random() * (H / d));
+}
+function endGame() {
+    running = false;
+    alert("Game Over ! \n Your Score is " + score + "\n Cause: " + cause);
+    snake.length = 0;
+    for (let i = originalSnakeLength - 1; i >= 0; i--) {
+        snake.push({ x: i, y: 0 });
+    }
+    direction = "right";
+    score = 0;
+    score = 0;
+    gameOver = false;
+    cause = "";
+    generateFruit();
+    gameOver = false;
+    start();
+}
+document.addEventListener('keydown', e => {
+    switch (e.code) {
+        case 'ArrowLeft':
+            if (direction !== "right") {
+                direction = "left";
+            }
             break;
-        case "ArrowRight":
-            dir = "right";
+        case 'ArrowRight':
+            if (direction !== "left") {
+                direction = "right";
+            }
             break;
-        case "ArrowUp":
-            dir = "up";
+        case 'ArrowUp':
+            if (direction !== "down") {
+                direction = "up";
+            }
             break;
-        case "ArrowDown":
-            dir = "down";
-            break;
-        case "SpaceKey ":
-            running = true;
-            alert("Space");
+        case 'ArrowDown':
+            if (direction !== "up") {
+                direction = "down";
+            }
             break;
     }
 });
-function loop() {
-    update();
-    draw();
-    requestAnimationFrame(loop);
+function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "green";
+    for (let index = 0; index < snake.length; index++) {
+        const element = snake[index];
+        ctx.fillRect(element.x * d, element.y * d, d, d);
+    }
+    ctx.fillStyle = "red";
+    ctx.fillRect(fruitX * d, fruitY * d, d, d);
+    ctx.fillStyle = "white";
+    ctx.font = "20px Arial";
+    ctx.fillText("Score: " + score, 10, 30);
 }
-loop();
+start();
 //# sourceMappingURL=Snake.js.map
