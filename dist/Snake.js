@@ -1,8 +1,9 @@
 "use strict";
-const d = 40;
+const d = 50;
 const snake = [{ x: 0, y: 0 }];
-let apple = { x: 10, y: 10 };
+let apple = { x: 0, y: 0 };
 let dir = "right";
+let running = true;
 let score = 0;
 function update() {
     const head = { x: snake[0].x, y: snake[0].y };
@@ -22,17 +23,32 @@ function update() {
         default:
             break;
     }
-    if (head.x < 0 || head.x > W || head.y < 0 || head.y > H) {
+    drawApple();
+    if (head.x == apple.x && head.y == apple.y) {
         score++;
         apple = {
             x: Math.floor(Math.random() * W / d) * d,
             y: Math.floor(Math.random() * H / d) * d,
         };
+        snake.push(head);
     }
     else {
         snake.pop();
     }
+    ctx.textAlign = "center";
     snake.unshift(head);
+}
+function checkCollision() {
+    const head = snake[0];
+    if (head.x < 0 || head.x >= W / d || head.y < 0 || head.y >= H / d) {
+        clearInterval(interval);
+        alert("Game Over \n Score ${score} \n Press Space to Restart");
+    }
+    running = true;
+}
+function drawApple() {
+    ctx.fillStyle = "red";
+    ctx.fillRect(apple.x * d, apple.y * d, d, d);
 }
 function draw() {
     ctx.clearRect(0, 0, W, H);
@@ -47,7 +63,7 @@ function draw() {
     });
     for (let x = 0; x < W; x++) {
         for (let y = 0; y < H; y++) {
-            ctx.strokeStyle = "white";
+            ctx.strokeStyle = "black";
             ctx.strokeRect(x * d, y * d, d, d);
         }
     }
@@ -66,9 +82,14 @@ document.addEventListener("keydown", (e) => {
         case "ArrowDown":
             dir = "down";
             break;
+        case "SpaceKey ":
+            running = true;
+            alert("Space");
+            break;
     }
 });
 function loop() {
+    update();
     draw();
     requestAnimationFrame(loop);
 }
