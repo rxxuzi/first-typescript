@@ -6,6 +6,5 @@ const H = canvas.height;
 const centerX = W / 2;
 const centerY = H / 2;
 const d = 50;
-currentValueElem.textContent = d.toString();
 const updateInterval = 100;
 //# sourceMappingURL=Main.js.map

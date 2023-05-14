@@ -1,6 +1,7 @@
 // const d = 20;
 const originalSnakeLength = 4;
 const spanScore = document.getElementById("score") as HTMLSpanElement;
+const spanWidth = document.getElementById("width") as HTMLSpanElement;
 // const updateInterval = 100;
 
 
@@ -182,7 +183,7 @@ function draw(){
     drawGrid();
 
     spanScore.textContent = score.toString();
-    currentValueElem.textContent = d.toString();
+    spanWidth.textContent = d.toString();
 }
 
 function drawGrid(){
@@ -202,5 +203,5 @@ function drawGrid(){
     }
 }
 
-start();
+// start();
 

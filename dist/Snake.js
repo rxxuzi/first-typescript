@@ -1,6 +1,7 @@
 "use strict";
 const originalSnakeLength = 4;
 const spanScore = document.getElementById("score");
+const spanWidth = document.getElementById("width");
 ctx.fillStyle = "#000";
 const snake = [];
 for (let i = originalSnakeLength - 1; i >= 0; i--) {
@@ -127,7 +128,7 @@ function draw() {
     ctx.fillRect(fruitX * d, fruitY * d, d, d);
     drawGrid();
     spanScore.textContent = score.toString();
-    currentValueElem.textContent = d.toString();
+    spanWidth.textContent = d.toString();
 }
 function drawGrid() {
     ctx.strokeStyle = "#000000";
@@ -145,5 +146,4 @@ function drawGrid() {
         ctx.stroke();
     }
 }
-start();
 //# sourceMappingURL=Snake.js.map

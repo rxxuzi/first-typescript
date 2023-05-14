@@ -5,12 +5,19 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- <script src="dist/Hello.js" defer></script> -->
-        <title>Document</title>
+        <title>Test Web Pages</title>
     </head>
     <body>
         <script src="dist/Input.js"></script>
-        <p>Hello! Press Space Key<input type="range" id="num1" min="10" max="100" step="10" ></p>
-        <p>width : <span id = "width"></span> score : <span id = "score"></span></p>
+        <p>
+            Hello! Press Space Key
+            <input type="range" id="slider" min="10" max="100" step="10" >
+            <span id = value></span>
+        </p>
+        <p>
+            width : <span id = "width"></span> 
+            score : <span id = "score"></span>
+        </p>
         <canvas id = "canvas" width="600" height="600"></canvas>
         <script src="dist/Main.js"></script>
         <!-- <script src="dist/Hexagon.js"></script> -->
