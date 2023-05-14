@@ -1,22 +1,10 @@
-const d = 50;
+// const d = 20;
 const originalSnakeLength = 4;
-const updateInterval = 100;
+const spanScore = document.getElementById("score") as HTMLSpanElement;
+// const updateInterval = 100;
 
-function drawGrid(){
-    for(let x = 0; x < W; x += d){
-        for(let y = 0; y < H; y += d){
-            const rect = document.createElement("div");
-            rect.style.position = "absolute";
-            rect.style.left = x + "px";
-            rect.style.top = y + "px";
-            rect.style.width = d + "px";
-            rect.style.height = d + "px";
-            rect.style.border = "1px solid #000";
-            document.body.appendChild(rect);
-        }
-    }
-}
 
+ctx.fillStyle  = "#000";
 
 //snakeの定義
 interface  Snake {
@@ -30,6 +18,7 @@ for(let i = originalSnakeLength - 1; i >= 0; i--) {
 }
 
 let direction: "left" | "right" | "up" | "down" = "right";
+let tmpDirection: "left" | "right" | "up" | "down" = "right";
 
 //fruit の初期位置
 let fruitX = 10;
@@ -37,16 +26,37 @@ let fruitY = 10;
 
 //game
 let score = 0;
-let running = true;
+let running = false ;
 let gameOver = false;
 let cause :string;
 
 //start 
 function start(){
-    draw();
     if(running){
+        draw();
         setInterval(update, updateInterval);
     }
+}
+
+function endGame(){
+    running = false;
+    alert("Game Over ! \n Your Score is " + score + "\n Cause: " + cause);
+    //all reset 
+    snake.length = 0;
+    for(let i = originalSnakeLength - 1; i >= 0; i--) {
+        snake.push({x: i, y: 0});
+    }
+    direction = "right";
+    score = 0;
+    gameOver = false;
+    cause = "";
+    generateFruit();
+    gameOver = false;
+}
+
+function restart(){
+    running = true;
+    start();
 }
 
 function update(){
@@ -54,8 +64,8 @@ function update(){
     const head = snake[0];
     let newX = head.x;
     let newY = head.y;
+
     switch(direction){
-        
         case "left":
             newX--;
             break;
@@ -70,6 +80,7 @@ function update(){
             break;
     }
     snake.unshift({x: newX, y: newY});
+
     //フルーツを食べた場合
     if(newX === fruitX && newY === fruitY){
         score++;
@@ -94,6 +105,7 @@ function update(){
         }
     }
     draw();    
+
 }
 
 function generateFruit(){
@@ -101,23 +113,7 @@ function generateFruit(){
     fruitY = Math.floor(Math.random() * (H/d));
 }
 
-function endGame(){
-    running = false;
-    alert("Game Over ! \n Your Score is " + score + "\n Cause: " + cause);
-    //all reset 
-    snake.length = 0;
-    for(let i = originalSnakeLength - 1; i >= 0; i--) {
-        snake.push({x: i, y: 0});
-    }
-    direction = "right";
-    score = 0;
-    score = 0;
-    gameOver = false;
-    cause = "";
-    generateFruit();
-    gameOver = false;
-    start();
-}
+
 
 //キーボード入力
 document.addEventListener('keydown' , e => {
@@ -145,6 +141,16 @@ document.addEventListener('keydown' , e => {
                 direction = "down";
             }
             break;
+
+        case 'Space': 
+            if(!running){
+                running = true;
+                start();
+                ctx.fillText("Space", 10, 30);
+            }else{
+                ctx.fillText("Pushed", 10, 60);
+            }
+            break;
     }
     
 });
@@ -164,11 +170,36 @@ function draw(){
     ctx.fillStyle = "red";
     ctx.fillRect(fruitX * d, fruitY * d, d, d);
 
-    //draw score
-    ctx.fillStyle = "white";
-    ctx.font = "20px Arial";
-    ctx.fillText("Score: " + score, 10, 30);
+    // //draw score
+    // ctx.fillStyle = "white";
+    // ctx.font = "20px Arial";
+    // ctx.fillText("Score: " + score, 10, 30);
+
+    // //draw score 
+    // ctx.fillStyle = "yellow";
+    // ctx.font = "20px Arial"; 
+    // ctx.fillText("Score: " + score, 20, 50);
+    drawGrid();
+
+    spanScore.textContent = score.toString();
     
+}
+
+function drawGrid(){
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 1;
+    for(let i = 0; i < W; i += d){
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, H);
+        ctx.stroke();
+    }
+    for(let i = 0; i < H; i += d){
+        ctx.beginPath();
+        ctx.moveTo(0, i);
+        ctx.lineTo(W, i);
+        ctx.stroke();
+    }
 }
 
 start();

@@ -8,4 +8,9 @@ const H = canvas.height;
 const centerX = W / 2;
 const centerY = H / 2;
 
-drawHexagon();
+// const dxElement = document.getElementById("dx") as HTMLInputElement;
+// const d = Number(dxElement.value) * 10;
+
+const d = 50;
+
+const updateInterval = 100;

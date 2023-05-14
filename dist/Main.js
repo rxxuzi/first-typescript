@@ -5,5 +5,6 @@ const W = canvas.width;
 const H = canvas.height;
 const centerX = W / 2;
 const centerY = H / 2;
-drawHexagon();
+const d = 50;
+const updateInterval = 100;
 //# sourceMappingURL=Main.js.map
