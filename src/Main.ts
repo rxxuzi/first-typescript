@@ -13,4 +13,6 @@ const centerY = H / 2;
 
 const d = 50;
 
+currentValueElem.textContent = d.toString();
+
 const updateInterval = 100;

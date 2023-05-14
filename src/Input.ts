@@ -3,7 +3,6 @@ const inputElem = document.getElementById('num1') as HTMLInputElement;
 // 埋め込む先のspan要素
 const currentValueElem = document.getElementById('width') as HTMLSpanElement;
 
-currentValueElem.textContent = d.toString();
 
 //現在の値をspanに埋め込む
 const setCurrentValue = (value: string) => {
