@@ -182,7 +182,7 @@ function draw(){
     drawGrid();
 
     spanScore.textContent = score.toString();
-    
+    currentValueElem.textContent = d.toString();
 }
 
 function drawGrid(){

@@ -127,6 +127,7 @@ function draw() {
     ctx.fillRect(fruitX * d, fruitY * d, d, d);
     drawGrid();
     spanScore.textContent = score.toString();
+    currentValueElem.textContent = d.toString();
 }
 function drawGrid() {
     ctx.strokeStyle = "#000000";
