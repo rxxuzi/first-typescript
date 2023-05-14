@@ -1,11 +1,11 @@
 //bouncing ball project
 
 //ボールの初期位置と速度
+const speed  = 4;
 let x = canvas.width / 2;
-
 let y = canvas.height - 30;
-let dx = 2;
-let dy = -2;
+let dx = speed;
+let dy = -speed;
 
 const Radius = 20;
 
@@ -52,7 +52,6 @@ function drawBall(){
 //パドル描画
 function drawPaddle(){
     ctx.beginPath();
-    
     ctx.rect(paddleX, paddleY, paddleWidth, paddleHeight);
     ctx.fillStyle = "#0095DD";
     ctx.fill();
@@ -101,4 +100,4 @@ function drawBBall(): void{
     y += dy;
 }
 
-const interval = setInterval(drawBBall, 30);
+const interval = setInterval(drawBBall, 10);

@@ -1,8 +1,9 @@
 "use strict";
+const speed = 4;
 let x = canvas.width / 2;
 let y = canvas.height - 30;
-let dx = 2;
-let dy = -2;
+let dx = speed;
+let dy = -speed;
 const Radius = 20;
 const paddleHeight = 10;
 const paddleWidth = 75;
@@ -71,5 +72,5 @@ function drawBBall() {
     x += dx;
     y += dy;
 }
-const interval = setInterval(drawBBall, 30);
+const interval = setInterval(drawBBall, 10);
 //# sourceMappingURL=Bouncing.js.map
