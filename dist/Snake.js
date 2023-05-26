@@ -105,6 +105,11 @@ document.addEventListener('keydown', e => {
                 direction = "down";
             }
             break;
+        case 'W':
+            if (direction !== "down") {
+                direction = "up";
+            }
+            break;
         case 'Space':
             if (!running) {
                 running = true;
@@ -129,6 +134,7 @@ function draw() {
     drawGrid();
     spanScore.textContent = score.toString();
     spanWidth.textContent = d.toString();
+    ctx.fillText("Score: " + score, 10, 30);
 }
 function drawGrid() {
     ctx.strokeStyle = "#000000";

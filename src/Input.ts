@@ -5,7 +5,7 @@ const setValue = (val : string) => {
     valueSpan.innerText = val;
 }
 
-const change = (e : Event) => {
+const change = () => {
     setValue(slider.value);
 }
 

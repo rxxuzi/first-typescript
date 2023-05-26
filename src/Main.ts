@@ -13,4 +13,4 @@ const centerY = H / 2;
 
 const d = 50;
 
-const updateInterval = 100;
+const updateInterval = 150;

@@ -6,5 +6,5 @@ const H = canvas.height;
 const centerX = W / 2;
 const centerY = H / 2;
 const d = 50;
-const updateInterval = 100;
+const updateInterval = 150;
 //# sourceMappingURL=Main.js.map

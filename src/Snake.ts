@@ -80,6 +80,8 @@ function update(){
             newY++;
             break;
     }
+
+    //snakeの位置の更新
     snake.unshift({x: newX, y: newY});
 
     //フルーツを食べた場合
@@ -143,6 +145,13 @@ document.addEventListener('keydown' , e => {
             }
             break;
 
+        //press W direction up
+        case 'W':
+            if(direction !== "down"){
+                direction = "up";
+            }
+            break;
+
         case 'Space': 
             if(!running){
                 running = true;
@@ -171,6 +180,7 @@ function draw(){
     ctx.fillStyle = "red";
     ctx.fillRect(fruitX * d, fruitY * d, d, d);
 
+
     // //draw score
     // ctx.fillStyle = "white";
     // ctx.font = "20px Arial";
@@ -184,6 +194,9 @@ function draw(){
 
     spanScore.textContent = score.toString();
     spanWidth.textContent = d.toString();
+    ctx.fillText("Score: " + score, 10, 30);
+
+
 }
 
 function drawGrid(){
